@@ -8,11 +8,10 @@ class Category
     // object properties
     public $id;
     public $name;
-    public $description;
-    public $created;
+    public $created_at;
 
     // constructor with $db as database connection
-    public function __constructor($db)
+    public function __construct($db)
     {
         $this->conn = $db;
     }
@@ -21,7 +20,7 @@ class Category
     public function read()
     {
         //select all data
-        $query = "SELECT id, name, description FROM " . $this->table_name . " ORDER BY name";
+        $query = "SELECT * FROM " . $this->table_name . " ORDER BY name";
         
         // prepare query statement
         $stmt = $this->conn->prepare($query);

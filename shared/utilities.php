@@ -21,7 +21,7 @@ class Utilities{
         $paging_arr['pages'] = array();
         $page_count = 0;
 
-        for ($x = $initial_numl; $x < $condition_limit_num; $x++)
+        for ($x = $initial_num; $x < $condition_limit_num; $x++)
         {
             // be sure '$x is greater than 0' AND 'less than or equal to the $total_pages
             if (($x > 0) && ($x <= $total_pages))

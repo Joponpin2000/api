@@ -8,7 +8,7 @@ include_once '../config/database.php';
 include_once '../objects/product.php';
 
 // instantiate database and product object
-$database = new Database();
+$database = new DatabaseClass();
 $db = $database->getConnection();
 
 // initialize object
@@ -16,6 +16,7 @@ $product = new Product($db);
 
 //query products
 $stmt = $product->read();
+
 $num = $stmt->rowCount();
 
 //check if more than 0 record

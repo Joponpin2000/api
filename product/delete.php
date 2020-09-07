@@ -11,7 +11,7 @@ include_once '../config/database.php';
 include_once '../objects/product.php';
 
 // get database connection
-$database = new Database();
+$database = new DatabaseClass();
 $db = $database->getConnection();
 
 

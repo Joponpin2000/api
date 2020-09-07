@@ -13,7 +13,7 @@ include_once '../objects/product.php';
 $utilities = new Utilities();
 
 // instantiate database and product object
-$database = new Database();
+$database = new DatabaseClass();
 $db = $database->getConnection();
 
 // initialize object

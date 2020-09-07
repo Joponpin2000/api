@@ -8,7 +8,7 @@ include_once '../config/database.php';
 include_once '../objects/category.php';
 
 // instantiate database and product object
-$database = new Database();
+$database = new DatabaseClass();
 $db = $database->getConnection();
 
 // initialize object
@@ -35,7 +35,7 @@ if ($num > 0)
         $category_item = array(
             "id" => $id,
             "name" => $name,
-            "description" => html_entity_decode($description)
+            "created_at" => $created_at
         );
 
         array_push($categories_arr["records"], $category_item);

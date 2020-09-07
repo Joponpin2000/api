@@ -11,12 +11,16 @@ include_once '../config/database.php';
 include_once '../objects/product.php';
 
 // get database connection
-$database = new Database();
+$database = new DatabaseClass();
 $db = $database->getConnection();
 
 // prepare product object
 $product = new Product($db);
 
+$product->id = isset($_GET['id']) ? $_GET['id'] : die();
+
+//query posts
+$stmt = $product->readOne();
 // read the details of product to be edited
 $product->readOne();
 
@@ -25,11 +29,11 @@ if ($product->name!=null)
     // create array
     $product_arr = array(
         "id" => $product->id,
-        "name" => $$product->name,
-        "description" => $$product->description,
-        "price" => $$product->price,
-        "category_id" => $$product->category_id,
-        "category_name" => $$product->category_name
+        "name" => $product->name,
+        "description" => $product->description,
+        "price" => $product->price,
+        "category_id" => $product->category_id,
+        "category_name" => $product->category_name
     );
 
     // set response code - 200 OK

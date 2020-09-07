@@ -13,10 +13,10 @@ class Product
     public $price;
     public $category_id;
     public $category_name;
-    public $created;
+    public $created_at;
 
     // constructor with $db as database connection
-    public function __constructor($db)
+    public function __construct($db)
     {
         $this->conn = $db;
     }
@@ -25,9 +25,9 @@ class Product
     function read()
     {
         //select all query
-        $query = "SELECT c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created
+        $query = "SELECT c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created_at
                     FROM " . $this->table_name . " p LEFT JOIN categories c ON p.category_id = c.id
-                    ORDER BY p.created DESC";
+                    ORDER BY p.created_at DESC";
         
         // prepare query statement
         $stmt = $this->conn->prepare($query);
@@ -42,7 +42,7 @@ class Product
     function create()
     {
         // query to insert record
-        $query = "INSERT INTO " . $this->table_name . " SET name=:name, price=:price, description=:description, category_id=:category_id, created=:created";
+        $query = "INSERT INTO " . $this->table_name . " SET name=:name, price=:price, description=:description, category_id=:category_id, created_at=:created_at";
 
         // prepare query
         $stmt = $this->conn->prepare($query);
@@ -52,14 +52,14 @@ class Product
         $this->price = htmlspecialchars(strip_tags($this->price));
         $this->description = htmlspecialchars(strip_tags($this->description));
         $this->category_id = htmlspecialchars(strip_tags($this->category_id));
-        $this->created = htmlspecialchars(strip_tags($this->created));
+        $this->created_at = htmlspecialchars(strip_tags($this->created_at));
 
         // bind values
         $stmt->bindParam(":name", $this->name);
         $stmt->bindParam(":price", $this->price);
         $stmt->bindParam(":description", $this->description);
         $stmt->bindParam(":category_id", $this->category_id);
-        $stmt->bindParam(":created", $this->created);
+        $stmt->bindParam(":created_at", $this->created_at);
 
         // execute query
         if ($stmt->execute())
@@ -73,7 +73,7 @@ class Product
     function readOne()
     {
         // query to read single record
-        $query = "SELECT c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created FROM " . $this->table_name . " p LEFT JOIN categories c ON
+        $query = "SELECT c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created_at FROM " . $this->table_name . " p LEFT JOIN categories c ON
          p.category_id=c.id WHERE p.id = ? LIMIT 0,1";
         
          // prepare query statement
@@ -157,9 +157,9 @@ class Product
     function search($keywords)
     {
         //select all query
-        $query = "SELECT c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created
+        $query = "SELECT c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created_at
                     FROM " . $this->table_name . " p LEFT JOIN categories c ON p.category_id = c.id WHERE p.name LIKE ? OR p.description LIKE ? OR 
-                    c.name LIKE ? ORDER BY p.created DESC";
+                    c.name LIKE ? ORDER BY p.created_at DESC";
         
         // prepare query statement
         $stmt = $this->conn->prepare($query);
@@ -184,8 +184,8 @@ class Product
     public function readPaging($from_record_num, $records_per_page )
     {
        // select query
-       $query = "SELECT c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created
-       FROM " . $this->table_name . " p LEFT JOIN categories c ON p.category_id = c.id ORDER BY p.created DESC LIMIT ?, ?";
+       $query = "SELECT c.name as category_name, p.id, p.name, p.description, p.price, p.category_id, p.created_at
+       FROM " . $this->table_name . " p LEFT JOIN categories c ON p.category_id = c.id ORDER BY p.created_at DESC LIMIT ?, ?";
 
         // prepare query statement
         $stmt = $this->conn->prepare($query);

@@ -12,7 +12,7 @@ include_once '../config/database.php';
 // instantiate product object
 include_once '../objects/products.php';
 
-$database = new Database();
+$database = new DatabaseClass();
 $db = $database->getConnection();
 
 $product = new Product($db);
